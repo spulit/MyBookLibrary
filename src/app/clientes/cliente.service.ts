@@ -111,4 +111,25 @@ export class ClienteService {
     );
   }
 
+  subirFoto(archivo: File, id): Observable<Cliente> {
+    let formData = new FormData();
+    formData.append("archivo", archivo);
+    formData.append("id", id);
+    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
+      map((response: any) => response.cliente as Cliente),
+      catchError(e => {
+        if(e.status == 500){
+          return throwError(e);
+        }
+        Swal.fire({
+          title: 'Error al subir Foto',
+          text: e.error.mensaje,
+          type: 'error',
+          confirmButtonText: 'Cachis'
+        });
+        return throwError(e);
+      })
+    );
+  }
+
 }
