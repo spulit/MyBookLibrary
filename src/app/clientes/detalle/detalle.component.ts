@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Cliente} from '../cliente';
 import {ClienteService} from '../cliente.service';
 import {ActivatedRoute} from '@angular/router';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
+import {ModalService} from './modal.service';
 
 @Component({
   selector: 'app-detalle',
@@ -12,23 +13,16 @@ import { HttpEventType } from '@angular/common/http';
 })
 export class DetalleComponent implements OnInit {
 
-  cliente: Cliente;
+  @Input() cliente: Cliente;
   titulo: string = "Detalle del cliente";
   private fotoSeleccionada: File;
   progress: number;
 
   constructor(private clienteService: ClienteService,
-    private activatedRoute: ActivatedRoute) { }
+    private modalService: ModalService ) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(param =>{
-      let id: number = +param.get('id');
-      if (id){
-        this.clienteService.getCliente(id).subscribe(cliente =>{
-          this.cliente = cliente;
-        });
-      }
-    });
+
   }
 
   seleccionarFoto(event){
@@ -60,6 +54,10 @@ export class DetalleComponent implements OnInit {
       //swal.fire('La foto se ha subido correctamente','Con éxito ${this.cliente.foto}', 'success');
     })
     }
-
+  }
+  cerrarModal(){
+    this.modalService.cerrarModal();
+    this.fotoSeleccionada  =null;
+    this.progress = 0;
   }
 }
