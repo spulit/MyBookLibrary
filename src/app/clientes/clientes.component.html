@@ -26,7 +26,19 @@
     </thead>
     <tbody>
       <tr *ngFor="let cliente of clientes">
-        <td><button type="button" name="button" (click)=abrirModal(cliente); class="btn btn-success">{{cliente.id}}</button></td>
+        <td><img (click)=abrirModal(cliente);
+                      *ngIf="cliente?.foto"
+                      src="http://localhost:8080/api/uploads/img/{{cliente.foto}}"
+                      alt="{{cliente.foto}}"
+                      style="width:64px; cursor: pointer;"
+                      class="img-img-thumbnail rounded">
+            <img (click)=abrirModal(cliente);
+                          *ngIf="!cliente?.foto"
+                          src="http://localhost:8080/images/bookDefault.png"
+                          alt="Sin foto"
+                          style="width:64px; cursor: pointer;"
+                          class="img-img-thumbnail rounded">
+          </td>
         <td>{{cliente.nombre}}</td>
         <td>{{cliente.apellido}}</td>
         <td>{{cliente.email}}</td>
