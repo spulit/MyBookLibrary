@@ -40,10 +40,19 @@
     <div class="form-group row">
       <label for="createAt" class="col-form-label col-sm-2">Fecha</label>
      <div class="col-sm-6">
-
        <input [matDatepicker]="myDatepicker" class="form-control" [(ngModel)]="cliente.createAt" name="createAt" style="display:inline; width: 300px">
         <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #myDatepicker></mat-datepicker>
+     </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="partner" class="col-form-label col-sm-2">Fecha</label>
+     <div class="col-sm-6">
+       <select [compareWith]="compararPartner" class="form-control" [(ngModel)]="cliente.partner" name="partner" style="display:inline; width: 500px">
+         <option [ngValue]="undefined"> --- Seleccionar un Partner ---- </option>
+        <option *ngFor="let partner of partners" [ngValue]="partner">{{partner.nombre}}</option>
+      </select>
      </div>
     </div>
 

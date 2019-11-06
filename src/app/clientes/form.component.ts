@@ -3,6 +3,7 @@ import {Cliente} from './cliente'
 import { ClienteService } from './cliente.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import Swal from 'sweetalert2';
+import {Partner} from './partner'
 
 @Component({
   selector: 'app-form',
@@ -13,12 +14,15 @@ export class FormComponent implements OnInit {
   private cliente: Cliente = new Cliente();
   private titulo:string = 'Dar de alta trabajador';
   private errores:string[];
+  partners:Partner[];
+
   constructor(private clienteService: ClienteService,
               private router: Router,
               private  activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.cargarCliente();
+    this.clienteService.getPartners().subscribe(partners => this.partners = partners)
   }
 
   public cargarCliente(): void{
@@ -64,6 +68,13 @@ export class FormComponent implements OnInit {
     console.error('Código de error desde Bckend: ' + err.status);
     console.error(err.error.errors);
   })
+  }
+
+  compararPartner(partner1: Partner, partner2: Partner) : boolean {
+    if (partner1 === undefined && partner2 === undefined){
+      return true;
+    }
+    return partner1 === null || partner2 === null ||partner1 === undefined || partner2 === undefined ? false : partner1.id===partner2.id;
   }
 
 }

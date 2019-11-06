@@ -8,6 +8,7 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/h
 import {map, catchError, tap} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import {Partner} from './Partner'
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,12 @@ export class ClienteService {
 
   constructor(private http: HttpClient,
               private router:Router) { }
+
+
+  getPartners(): Observable<Partner[]>{
+    return this.http.get<Partner[]>(this.urlEndPoint + '/partners')
+
+  }
 
   getClientes(page : number): Observable<any>{
     // return of(CLIENTES);
